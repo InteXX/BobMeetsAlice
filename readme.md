@@ -3,6 +3,11 @@
 This sample Blazor Server application demonstrates a simple invoice management system where
 payments applied to invoices are reflected in real time for all subscribers.
 
+## The Problem
+Bob and Alice are each looking at the same invoice on their screens. Bob applies a payment
+to that invoice. Alice's screen must automatically update itself with the new balance at the
+moment Bob clicks to apply the payment.
+
 ## Features
 
 - **Invoice Details**: Displays invoice information such as `Amount` and `Status`.
