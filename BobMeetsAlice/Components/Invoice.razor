@@ -1,0 +1,96 @@
+﻿@page "/invoice/{InvoiceId:int}"
+@using Services
+@using Models
+@inject InvoiceService InvoiceService
+@inject UpdateService UpdateService
+
+<h3>Invoice #@InvoiceId</h3>
+
+@if (invoice == null)
+{
+  <p>Loading...</p>
+}
+else
+{
+  <table style="border-collapse: separate; border-spacing: 3px;">
+    <tr>
+      <td>Amount:</td>
+      <td>@invoice.Amount</td>
+    </tr>
+    <tr>
+      <td>Payment:</td>
+      <td><input type="number" @bind="paymentAmount" /></td>
+    </tr>
+    <tr>
+      <td>Balance:</td>
+      <td>@invoice.Balance</td>
+    </tr>
+    <tr>
+      <td>Status:</td>
+      <td>@invoice.Status</td>
+    </tr>
+    <tr>
+      <td colspan="2"><button @onclick="MakePayment">Make Payment</button></td>
+    </tr>
+  </table>
+}
+
+
+
+@code {
+  [Parameter] public int InvoiceId { get; set; }
+  private InvoiceModel? invoice;
+  private decimal paymentAmount;
+
+  protected override void OnInitialized()
+  {
+    LoadInvoice();
+    UpdateService.Subscribe(HandleInvoiceUpdated);
+  }
+
+  private void LoadInvoice()
+  {
+    if (invoice == null)
+    {
+      invoice = InvoiceService.GetInvoiceById(InvoiceId);
+    }
+    else
+    {
+      var updatedInvoice = InvoiceService.GetInvoiceById(InvoiceId);
+
+      if (updatedInvoice != null)
+      {
+        invoice.Payment = updatedInvoice.Payment;
+        invoice.Balance = updatedInvoice.Balance;
+        invoice.Status = updatedInvoice.Status;
+      }
+    }
+
+    InvokeAsync(StateHasChanged); // Refresh the UI
+  }
+
+  private void HandleInvoiceUpdated(int updatedInvoiceId)
+  {
+    if (updatedInvoiceId == InvoiceId)
+    {
+      LoadInvoice(); // Refresh the invoice data
+      InvokeAsync(StateHasChanged); // Notify Blazor to re-render the UI
+    }
+  }
+
+  private void MakePayment()
+  {
+    if (invoice is null) return;
+
+    invoice.Balance -= paymentAmount;
+    invoice.Payment = paymentAmount;
+    invoice.Status = invoice.Balance == 0 ? "Paid" : (invoice.Balance < 0 ? "Overpaid" : "Pending");
+
+    UpdateService.NotifyInvoiceUpdated(InvoiceId);
+  }
+
+  public void Dispose()
+  {
+    UpdateService.Unsubscribe(HandleInvoiceUpdated);
+  }
+}
