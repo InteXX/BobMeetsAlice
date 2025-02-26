@@ -200,7 +200,7 @@ git clone https://github.com/intexx/BobMeetsAlice.git
 ```
 2. Open the project in Visual Studio or your preferred IDE.
 3. Build and run the application.
-4. Navigate to the invoice page, duplicate the tab, and the tear it off into a separate window
+4. Navigate to the invoice page, duplicate the tab, and then tear it off into a separate window
 in order to simulate multiple users.
 ```bash
 http://localhost:5172/invoice/1
