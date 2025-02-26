@@ -1,6 +1,7 @@
 # Invoice Payment System
 
-This sample Blazor Server application provides a simple invoice management system where users can apply payments to invoices, and updates are reflected in real time for all subscribers.
+This sample Blazor Server application demonstrates a simple invoice management system where
+payments applied to invoices are reflected in real time for all subscribers.
 
 ## Features
 
