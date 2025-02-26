@@ -19,7 +19,7 @@ ensuring the UI is refreshed for all users with the latest data.
 
 2. **Making a Payment**  
    - The user enters a payment amount.
-   - The invoice status changes to `"Paid"`, and the amount is reduced accordingly.
+   - The invoice status changes and the amount is reduced accordingly.
    - A notification service updates all subscribers.
 
 3. **Real-time Updates**  
