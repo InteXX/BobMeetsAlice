@@ -202,7 +202,10 @@ git clone https://github.com/intexx/BobMeetsAlice.git
 3. Build and run the application.
 4. Navigate to the invoice page, duplicate the tab, and the tear it off into a separate window
 in order to simulate multiple users.
-5. Input the payment amount on any tab and click "Make Payment." You’ll see the invoice details
+```bash
+http://localhost:5172/invoice/1
+```
+5. Input the payment amount on any tab and click "Make Payment." You'll see the invoice details
 update in real time for all users.
 
 ## Technologies Used
